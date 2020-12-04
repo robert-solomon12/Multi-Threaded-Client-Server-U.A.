@@ -22,9 +22,6 @@ import javax.swing.border.EmptyBorder;
 import controller.Database;
 import model.Client;
 
-
-
-
 public class LoginFrame extends JFrame {
 	
 	
@@ -82,8 +79,7 @@ public LoginFrame() {
     studID.setBounds(60, 155, 200, 52);
     contentPane.add(studID);
 
-//exitBtn.addActionListener(e -> System.exit(0));
-//contentPane.add(exitBtn);
+
 
     loginBtn = new JButton("Login");
     loginBtn.setFont(new Font("Tahoma", Font.PLAIN, 26));
@@ -125,7 +121,19 @@ public LoginFrame() {
     });
 
     contentPane.add(loginBtn);
-      
+     
+    exitBtn = new JButton("Exit");
+    exitBtn.setFont(new Font("Tahoma", Font.PLAIN, 26));
+    exitBtn.setBounds(305, 270, 162, 73);
+    exitBtn.addActionListener(new ActionListener() {
+        
+    public void actionPerformed(ActionEvent e) {
+  
+  System.exit(0);
+}
+    });
+    
+    contentPane.add(exitBtn);
 }
 
 }

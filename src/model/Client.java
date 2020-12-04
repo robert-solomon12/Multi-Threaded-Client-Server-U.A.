@@ -18,10 +18,7 @@ public class Client extends JFrame {
   private DataInputStream fromServer;
   private JButton sdBtn;
   private JButton exitBtn;
-//  public static void main(String[] args) {
-//    new Clientv();
-//  }
-  
+
   
 
   public Client() {
@@ -36,7 +33,6 @@ public class Client extends JFrame {
     add(p, BorderLayout.SOUTH);
     add(new JScrollPane(jta), BorderLayout.CENTER);
 
-   // jtf.addActionListener(new Listener()); // Register listener
 
     setTitle("Client-1");
     setSize(500, 300);
@@ -101,6 +97,17 @@ System.out.print("I'm being clicked!");
 	  }
   );
 
+  exitBtn = new JButton("Exit");
+  exitBtn.setFont(new Font("Tahoma", Font.PLAIN, 26));
+  exitBtn.setBounds(305, 270, 162, 73);
+  exitBtn.addActionListener(new ActionListener() {
+      
+  public void actionPerformed(ActionEvent e) {
 
-  }
+System.exit(0);
 }
+});
+  
+ p.add(exitBtn, BorderLayout.AFTER_LAST_LINE);
+}
+  }

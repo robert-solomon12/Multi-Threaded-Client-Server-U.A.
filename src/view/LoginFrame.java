@@ -25,7 +25,7 @@ import model.Client;
 
 
 
-public class LoginFrame extends JFrame implements ActionListener  {
+public class LoginFrame extends JFrame {
 	
 	
     private static final long serialVersionUID = 1L;
@@ -128,9 +128,4 @@ public LoginFrame() {
       
 }
 
-@Override
-public void actionPerformed(ActionEvent arg0) {
-	// TODO Auto-generated method stub
-	
-}
 }

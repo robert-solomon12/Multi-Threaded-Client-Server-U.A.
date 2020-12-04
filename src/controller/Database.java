@@ -3,7 +3,9 @@ package controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.*;
 
@@ -29,7 +31,6 @@ public class Database {
 		
      	Connection conn;
 
-		try {	
 			/*
 			 * Connection String containing 3 parameters to establish connectivity to my Database WAMP SERVER (URL, USERNAME, PASSWORD)
 			 */
@@ -37,17 +38,33 @@ public class Database {
 			
 			//Printing a successful connection message if a successful connection has been established. 
 			System.out.println("Connection to Database has been successfully established!");
-			
-//			JOptionPane.showMessageDialog(null, "Connection to Database has been successfully established!");
-			
-			//			consoleFeedback.setText("Connection to Database has been successfully established!");
 			return conn;
-		}catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
-			System.out.println("Error: " + e.getMessage());
-			return null;
 		}
-		// TODO: handle exception
-	}
+	
+	
+    /*
+    Returns ResultSet of records from database
+     */
+    public static ResultSet fetchRec() throws SQLException{
+        Statement stmt = getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        String sql = "SELECT * FROM students";
+        stmt.executeQuery(sql);
+        ResultSet rs = stmt.getResultSet();
+        return rs;
+    }
+
+    /*
+    Returns ResultSet of found record from database
+     */
+    public ResultSet returnRec(String sid) throws SQLException{
+        Statement stmt = getConnection().createStatement();
+        String sql = "SELECT * FROM students WHERE STUD_ID ='" + sid + "'";
+        stmt.executeQuery(sql);
+        ResultSet rs = stmt.getResultSet();
+        return rs;
+    }
 }
+
+
 	

@@ -10,14 +10,18 @@ import java.sql.SQLException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 import javax.swing.*;
 //import controller.database;
 import javax.swing.border.EmptyBorder;
 
 import controller.Database;
-import controller.Server;
 import model.Client;
+import model.Server;
 
 
 
@@ -27,15 +31,10 @@ public class LoginFrame extends JFrame implements ActionListener  {
     private static final long serialVersionUID = 1L;
     private JTextField studentId;
     
-    private JButton loginBtn, openRegBtn;
-//    private JButton openRegBtn;
-//    private JButton clearBtn;
-//    private JLabel label;
+    private JButton loginBtn;
+    private JButton exitBtn;
     private JPanel contentPane;
-    private Database conn;
-    private final String tableName = "students";
-    
-    
+
     	
 public static void main(String[] args) {
 	try {
@@ -46,28 +45,14 @@ public static void main(String[] args) {
 		e.printStackTrace();
 	}
 }
-	
-//	public static void main(String[] args) {
-//	EventQueue.invokeLater(new Runnable() {
-//        public void run() {
-//            try {
-//                LoginFrame fr = new LoginFrame();
-//                fr.setVisible(true);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        });
-//}
 
 /**
  * Creating the frame.
  */
 public LoginFrame() {
 	
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setBounds(450, 190, 1014, 597);
-    setResizable(false);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    setSize(600,400);
     contentPane = new JPanel();
     contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
     setContentPane(contentPane);
@@ -79,94 +64,79 @@ public LoginFrame() {
     JLabel lblNewLabel = new JLabel("Login AoC");
     lblNewLabel.setForeground(Color.BLACK);
     lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 46));
-    lblNewLabel.setBounds(423, 13, 273, 93);
+    lblNewLabel.setBounds(100, 13, 273, 93);
     contentPane.add(lblNewLabel);
 
     studentId = new JTextField();
     studentId.setFont(new Font("Tahoma", Font.PLAIN, 32));
-    studentId.setBounds(481, 170, 281, 68);
+    studentId.setBounds(250, 170, 200, 30);
     contentPane.add(studentId);
     studentId.setColumns(10);
 
     //Student ID Label
     
-    JLabel studID = new JLabel("Student ID");
+    JLabel studID = new JLabel("Enter Student ID");
     studID.setBackground(Color.BLACK);
     studID.setForeground(Color.BLACK);
-    studID.setFont(new Font("Tahoma", Font.PLAIN, 31));
-    studID.setBounds(250, 166, 193, 52);
+    studID.setFont(new Font("Tahoma", Font.PLAIN, 25));
+    studID.setBounds(60, 155, 200, 52);
     contentPane.add(studID);
 
+//exitBtn.addActionListener(e -> System.exit(0));
+//contentPane.add(exitBtn);
 
     loginBtn = new JButton("Login");
     loginBtn.setFont(new Font("Tahoma", Font.PLAIN, 26));
-    loginBtn.setBounds(245, 392, 162, 73);
-    
+    loginBtn.setBounds(150, 270, 162, 73);
+
     loginBtn.addActionListener(new ActionListener() {
-       	
+    
         public void actionPerformed(ActionEvent e) {
             String stud_id = studentId.getText();
-//            String firstN = fName.getText();
-//            String lastN = lName.getText();
-            
-                        
-            //method already in another class
+           
             try {
             	Connection db = Database.getConnection();
 
                 PreparedStatement st = (PreparedStatement) 
-                		db.prepareStatement("SELECT * FROM students WHERE STUD_ID=?");
-
+               
+               db.prepareStatement("SELECT * FROM students WHERE STUD_ID=?");		   
+               db.prepareStatement("UPDATE students SET TOT_REQ + 1 WHERE STUD_ID=?");
+               
                 st.setString(1, stud_id);
-                
-                ResultSet rs = st.executeQuery();
-                if (rs.next()) {
-//                    dispose();
-                    LoginFrame logH = new LoginFrame();
-                    logH.setTitle("Welcome");
-                    logH.setVisible(true);
-                    JOptionPane.showMessageDialog(loginBtn, "Welcome!" );   //MUST CHECK PROJECT SPEC
-                    Client cl = new Client();
-                    Server svr = new Server();
+               
+               ResultSet rs = st.executeQuery();
+               if(rs.next()) {
+
+            	    String firstN = rs.getString("FNAME");
+                    String lastN = rs.getString("SNAME");
+         
+                    JOptionPane.showMessageDialog(loginBtn,"Welcome " + firstN + " " + lastN + "... You are now connected to the Server");
+                    new Client();
                 } else {
-                    JOptionPane.showMessageDialog(loginBtn, "Sorry" + stud_id , "You are not a registered Student. Bye.", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(loginBtn, "Sorry " + stud_id + " " + "You are not a registered Student. Bye.", null, JOptionPane.ERROR_MESSAGE);
                 }
-            } 
-   
+            }
             catch (SQLException sqlException) {
-                sqlException.printStackTrace();
+                //sqlException.printStackTrace();
+                System.out.println("Could not Login ...sql exception issue");
             }
         }
     });
 
     contentPane.add(loginBtn);
       
-    openRegBtn = new JButton("Register");
-    openRegBtn.setFont(new Font("Tahoma", Font.PLAIN, 26));
-    openRegBtn.setBounds(545, 392, 162, 73);
-
-    openRegBtn.setFocusable(false);
-    openRegBtn.addActionListener(this);
-    contentPane.add(openRegBtn);
-    
 }
 
 @Override
-public void actionPerformed(ActionEvent e) {
-	try {
-	if(e.getSource()==openRegBtn) {
-//		 Client cl = new Client();
-		 RegisterFrame regFr = new RegisterFrame();
-			regFr.setVisible(true);
-	}
+public void actionPerformed(ActionEvent arg0) {
+	// TODO Auto-generated method stub
 	
-}catch (Exception exc) {
-	exc.printStackTrace();
 }
 }
+
+
 	
-}   
-   
+ 
 
   
 		

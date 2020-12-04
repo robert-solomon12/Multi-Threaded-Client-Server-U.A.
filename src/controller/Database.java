@@ -11,19 +11,6 @@ import javax.swing.*;
 
 public class Database {
 
-	
-//	private final String userName = "root";
-//	/** The password for the MySQL account (or empty for anonymous) */
-//	private final String password = "admin";
-//	/** The name of the computer running MySQL */
-//	private final String serverName = "localhost";
-//	/** The port of the MySQL server (default is 3306) */
-//	private final int portNumber = 3306;
-//	/** The name of the database we are testing with (this default is installed with MySQL) */
-//	private final String tableName = "students";
-//	
-//	private final String dbName = "assign2";
-	
 	/*
 	 * Connection method call to execute connection to my WAMP Server Database
 	 */
@@ -40,30 +27,6 @@ public class Database {
 			System.out.println("Connection to Database has been successfully established!");
 			return conn;
 		}
-	
-	
-    /*
-    Returns ResultSet of records from database
-     */
-    public static ResultSet fetchRec() throws SQLException{
-        Statement stmt = getConnection().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                ResultSet.CONCUR_UPDATABLE);
-        String sql = "SELECT * FROM students";
-        stmt.executeQuery(sql);
-        ResultSet rs = stmt.getResultSet();
-        return rs;
-    }
-
-    /*
-    Returns ResultSet of found record from database
-     */
-    public ResultSet returnRec(String sid) throws SQLException{
-        Statement stmt = getConnection().createStatement();
-        String sql = "SELECT * FROM students WHERE STUD_ID ='" + sid + "'";
-        stmt.executeQuery(sql);
-        ResultSet rs = stmt.getResultSet();
-        return rs;
-    }
 }
 
 

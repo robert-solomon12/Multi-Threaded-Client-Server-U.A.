@@ -1,12 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import model.Client;
+
 import model.Server;
 
 

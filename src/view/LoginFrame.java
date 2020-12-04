@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Database;
 import model.Client;
-import model.Server;
+
 
 
 
@@ -113,9 +113,10 @@ public LoginFrame() {
                     JOptionPane.showMessageDialog(loginBtn,"Welcome " + firstN + " " + lastN + "... You are now connected to the Server");
                     new Client();
                 } else {
-                    JOptionPane.showMessageDialog(loginBtn, "Sorry " + stud_id + " " + "You are not a registered Student. Bye.", null, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(loginBtn, "Sorry " + stud_id + " " + "You are not a registered Student. Try again or exit!", null, JOptionPane.ERROR_MESSAGE);
                 }
             }
+            //Catching sql Exception thread
             catch (SQLException sqlException) {
                 //sqlException.printStackTrace();
                 System.out.println("Could not Login ...sql exception issue");
@@ -133,15 +134,3 @@ public void actionPerformed(ActionEvent arg0) {
 	
 }
 }
-
-
-	
- 
-
-  
-		
-		
-		
-		
-		
-	

@@ -107,14 +107,16 @@ public LoginFrame() {
                     String lastN = rs.getString("SNAME");
          
                     JOptionPane.showMessageDialog(loginBtn,"Welcome " + firstN + " " + lastN + "... You are now connected to the Server");
+                    dispose();
                     new Client();
+                    
                 } else {
                     JOptionPane.showMessageDialog(loginBtn, "Sorry " + stud_id + " " + "You are not a registered Student. Try again or exit!", null, JOptionPane.ERROR_MESSAGE);
                 }
             }
             //Catching sql Exception thread
             catch (SQLException sqlException) {
-                //sqlException.printStackTrace();
+               
                 System.out.println("Could not Login ...sql exception issue");
             }
         }
